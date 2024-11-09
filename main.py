@@ -1,7 +1,7 @@
 from list import *
 
 def Rember1(X,L):
-    if IsEmpety(L):
+    if IsEmpty(L):
         return []
     else:
         if X == FirstElmt(L):
@@ -10,7 +10,7 @@ def Rember1(X,L):
             return Konso(FirstElmt(L),Rember1(X, Tail(L)))
 
 def Rember2(X,L):
-    if IsEmpety(L):
+    if IsEmpty(L):
         return []
     else:
         if X == LastElmt(L):
@@ -19,7 +19,7 @@ def Rember2(X,L):
             return Konsi(Rember2(X, Head(L)), LastElmt(L))
          
 def MultiRember(X,L):
-    if IsEmpety(L):
+    if IsEmpty(L):
         return []
     else:
         if X == FirstElmt(L):
@@ -28,7 +28,7 @@ def MultiRember(X,L):
             return Konso(FirstElmt(L),MultiRember(X, Tail(L))) 
         
 def MakeSet1(L):
-    if IsEmpety(L):
+    if IsEmpty(L):
         return []
     else:
         if IsMember(FirstElmt(L), Tail(L)):
@@ -37,7 +37,7 @@ def MakeSet1(L):
             return(Konso(FirstElmt(L),MakeSet1(Tail(L))))
 
 def MakeSet2(L):
-    if IsEmpety(L):
+    if IsEmpty(L):
         return []
     else:
         return Konso(FirstElmt(L),MakeSet2(MultiRember(FirstElmt(L),Tail(L))))
@@ -49,7 +49,7 @@ def KonsoSet(e,H):
         return Konso(e,H)
 
 def IsSet(L):
-    if IsEmpety(L):
+    if IsEmpty(L):
         return True
     else:
         if IsMember(FirstElmt(L),Tail(L)):
@@ -58,7 +58,7 @@ def IsSet(L):
             return IsSet(Tail(L))
         
 def IsSubset(H1,H2):
-    if IsEmpety(H1):
+    if IsEmpty(H1):
         return True
     else:
         if IsMember(FirstElmt(H1),H2):
@@ -70,11 +70,11 @@ def IsEqualSet1(H1,H2):
     return IsSubset(H1,H2) and IsSubset(H2,H1)
     
 def IsEqualSet2(H1,H2):
-    if IsEmpety(H1) and IsEmpety(H2):
+    if IsEmpty(H1) and IsEmpty(H2):
         return True
-    elif IsEmpety(H1) and not IsEmpety(H2):
+    elif IsEmpty(H1) and not IsEmpty(H2):
         return False
-    elif not IsEmpety(H1) and IsEmpety(H2):
+    elif not IsEmpty(H1) and IsEmpty(H2):
         return False
     else:
         return FirstElmt(H1) == FirstElmt(H2) and IsEqualSet2(Tail(H1),Tail(H2))
@@ -82,13 +82,13 @@ def IsEqualSet2(H1,H2):
 
     
 def  IsIntersect(H1,H2):
-    if IsEmpety(H1) or IsEmpety(H2):
+    if IsEmpty(H1) or IsEmpty(H2):
         return False
     else:
         return IsMember(FirstElmt(H1),H2) or IsIntersect(Tail(H1),H2)
     
 def MakeIntersect1(H1,H2):
-    if IsEmpety(H1) or IsEmpety(H2):
+    if IsEmpty(H1):
         return []
     else:
         if IsMember(FirstElmt(H1),H2):
@@ -97,7 +97,7 @@ def MakeIntersect1(H1,H2):
             return MakeIntersect1(Tail(H1),H2)
     
 def MakeIntersect2(H1,H2):
-    if IsEmpety(H1) or IsEmpety(H2):
+    if IsEmpty(H2):
         return []
     else:
         if IsMember(FirstElmt(H2),H1):
@@ -106,7 +106,7 @@ def MakeIntersect2(H1,H2):
             return MakeIntersect2(H1,Tail(H2))
     
 def MakeUnion1(H1,H2):
-    if IsEmpety(H1) or IsEmpety(H2):
+    if IsEmpty(H1):
         return H2
     else:
         if not IsMember(FirstElmt(H1),H2):
@@ -115,7 +115,7 @@ def MakeUnion1(H1,H2):
             return MakeUnion1(Tail(H1),H2)
     
 def MakeUnion2(H1,H2):
-    if IsEmpety(H1) or IsEmpety(H2):
+    if IsEmpty(H2):
         return H1
     else:
         if not IsMember(FirstElmt(H2),H1):
@@ -124,7 +124,7 @@ def MakeUnion2(H1,H2):
             return MakeUnion2(H1,Tail(H2))
         
 def  NBIntersect(H1,H2):
-    if IsEmpety(H1) or IsEmpety(H2):
+    if IsEmpty(H1):
         return 0
     else:
         if IsMember(FirstElmt(H1),H2):
@@ -133,13 +133,14 @@ def  NBIntersect(H1,H2):
             return NBIntersect(Tail(H1),H2)
         
 def NBUnion(H1,H2):
-    if IsEmpety(H1) or IsEmpety(H2):
-        return NbElmt(H2) + NbElmt(H1)
+    if IsEmpty(H1):
+        return NbElmt(H2) 
     else:
         if not IsMember(FirstElmt(H1),H2):
             return 1 + NBUnion(Tail(H1),H2)
         else:
             return NBUnion(Tail(H1),H2)
+
     
     
 print(Rember1(4,[1,2,3,4,5,4,7]))
