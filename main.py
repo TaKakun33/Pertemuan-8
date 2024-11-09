@@ -79,7 +79,67 @@ def IsEqualSet2(H1,H2):
     else:
         return FirstElmt(H1) == FirstElmt(H2) and IsEqualSet2(Tail(H1),Tail(H2))
     
-# def  IsIntersect(H1,H2):
+
+    
+def  IsIntersect(H1,H2):
+    if IsEmpety(H1) or IsEmpety(H2):
+        return False
+    else:
+        return IsMember(FirstElmt(H1),H2) or IsIntersect(Tail(H1),H2)
+    
+def MakeIntersect1(H1,H2):
+    if IsEmpety(H1) or IsEmpety(H2):
+        return []
+    else:
+        if IsMember(FirstElmt(H1),H2):
+            return Konso(FirstElmt(H1),MakeIntersect1(Tail(H1),H2))
+        else:
+            return MakeIntersect1(Tail(H1),H2)
+    
+def MakeIntersect2(H1,H2):
+    if IsEmpety(H1) or IsEmpety(H2):
+        return []
+    else:
+        if IsMember(FirstElmt(H2),H1):
+            return Konso(FirstElmt(H2),MakeIntersect2(H1,Tail(H2)))
+        else:
+            return MakeIntersect2(H1,Tail(H2))
+    
+def MakeUnion1(H1,H2):
+    if IsEmpety(H1) or IsEmpety(H2):
+        return H2
+    else:
+        if not IsMember(FirstElmt(H1),H2):
+            return Konso(FirstElmt(H1),MakeUnion1(Tail(H1),H2))
+        else:
+            return MakeUnion1(Tail(H1),H2)
+    
+def MakeUnion2(H1,H2):
+    if IsEmpety(H1) or IsEmpety(H2):
+        return H1
+    else:
+        if not IsMember(FirstElmt(H2),H1):
+            return Konso(FirstElmt(H2),MakeUnion2(H1,Tail(H2)))
+        else:
+            return MakeUnion2(H1,Tail(H2))
+        
+def  NBIntersect(H1,H2):
+    if IsEmpety(H1) or IsEmpety(H2):
+        return 0
+    else:
+        if IsMember(FirstElmt(H1),H2):
+            return 1 + NBIntersect(Tail(H1),H2)
+        else:
+            return NBIntersect(Tail(H1),H2)
+        
+def NBUnion(H1,H2):
+    if IsEmpety(H1) or IsEmpety(H2):
+        return NbElmt(H2) + NbElmt(H1)
+    else:
+        if not IsMember(FirstElmt(H1),H2):
+            return 1 + NBUnion(Tail(H1),H2)
+        else:
+            return NBUnion(Tail(H1),H2)
     
     
 print(Rember1(4,[1,2,3,4,5,4,7]))
@@ -93,3 +153,11 @@ print(IsSet([1,2,3,4,5,6,3,32,32,4,5,2]))
 print(IsSubset([1,2,0],[1,2,3,4,5]))
 print(IsEqualSet1([1,2,3],[1,2,3,4]))
 print(IsEqualSet2([1,2,3],[1,2,3]))
+print(IsIntersect([1,2,3],[4,5,6,1,2]))
+print(MakeIntersect1([0,1,2,3,4,5],[4,5,6,1,2]))
+print(MakeIntersect2([0,1,2,3,4,5],[4,5,6,1,2]))
+print(MakeUnion1([0,1,2,3,4,5],[4,5,6,1,2]))
+print(MakeUnion2([0,1,2,3,4,5],[4,5,6,1,2]))
+
+print(NBIntersect([0,1,2,3,4,5],[4,5,6,1,2]))
+print(NBUnion([0,1,2,3,4,5],[4,5,6,1,2]))
