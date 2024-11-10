@@ -18,23 +18,23 @@ from list import *
 # List baru yang dihasilkan tidak lagi memiliki elemen x dan List kosong tetap menjadi list kosong.}
 
 # Realisasi
-def Rember1(X,L):
+def RemberV1(X,L):
     if IsEmpty(L):
         return []
     else:
         if X == FirstElmt(L):
             return Tail(L)
         else:
-            return Konso(FirstElmt(L),Rember1(X, Tail(L)))
+            return Konso(FirstElmt(L),RemberV1(X, Tail(L)))
 
-def Rember2(X,L):
+def RemberV2(X,L):
     if IsEmpty(L):
         return []
     else:
         if X == LastElmt(L):
             return Head(L)
         else:
-            return Konsi(Rember2(X, Head(L)), LastElmt(L))
+            return Konsi(RemberV2(X, Head(L)), LastElmt(L))
         
 def MultiRember(X,L):
     if IsEmpty(L):
@@ -50,20 +50,20 @@ def MultiRember(X,L):
 #   {MakeSet(L) membuat set dari list L dengan menghapus semua kemunculan lebih dari satu kali dan list kosong tetap menjadi himpunan kosong.}
 
 # Realisasi
-def MakeSet1(L):
+def MakeSetV1(L):
     if IsEmpty(L):
         return []
     else:
         if IsMember(FirstElmt(L), Tail(L)):
-            return MakeSet1(Tail(L))
+            return MakeSetV1(Tail(L))
         else:
-            return(Konso(FirstElmt(L),MakeSet1(Tail(L))))
+            return(Konso(FirstElmt(L),MakeSetV1(Tail(L))))
 
-def MakeSet2(L):
+def MakeSetV2(L):
     if IsEmpty(L):
         return []
     else:
-        return Konso(FirstElmt(L),MakeSet2(MultiRember(FirstElmt(L),Tail(L))))
+        return Konso(FirstElmt(L),MakeSetV2(MultiRember(FirstElmt(L),Tail(L))))
     
 #DEFINISI DAN SPESIKASI KONSTRUKTOR SET  
 # KonsoSet: elemen,set -> set  
@@ -107,10 +107,10 @@ def IsSubset(H1,H2):
         else:
             return False
             
-def IsEqualSet1(H1,H2):
+def IsEqualSetV1(H1,H2):
     return IsSubset(H1,H2) and IsSubset(H2,H1)
     
-def IsEqualSet2(H1,H2):
+def IsEqualSetV2(H1,H2):
     if IsEmpty(H1) and IsEmpty(H2):
         return True
     elif IsEmpty(H1) and not IsEmpty(H2):
@@ -118,7 +118,7 @@ def IsEqualSet2(H1,H2):
     elif not IsEmpty(H1) and IsEmpty(H2):
         return False
     else:
-        return FirstElmt(H1) == FirstElmt(H2) and IsEqualSet2(Tail(H1),Tail(H2))
+        return FirstElmt(H1) == FirstElmt(H2) and IsEqualSetV2(Tail(H1),Tail(H2))
     
 def  IsIntersect(H1,H2):
     if IsEmpty(H1) or IsEmpty(H2):
@@ -140,41 +140,41 @@ def  IsIntersect(H1,H2):
 #   {NBUnion(H1,H2) menghasilkan jumlah elemen hasil gabungan antara H1 dan H2 tanpa memanfaatkan fungsi MakeUnion(H1,H2).}
 
 # Realisasi 
-def MakeIntersect1(H1,H2):
+def MakeIntersectV1(H1,H2):
     if IsEmpty(H1):
         return []
     else:
         if IsMember(FirstElmt(H1),H2):
-            return Konso(FirstElmt(H1),MakeIntersect1(Tail(H1),H2))
+            return Konso(FirstElmt(H1),MakeIntersectV1(Tail(H1),H2))
         else:
-            return MakeIntersect1(Tail(H1),H2)
+            return MakeIntersectV1(Tail(H1),H2)
     
-def MakeIntersect2(H1,H2):
+def MakeIntersectV2(H1,H2):
     if IsEmpty(H2):
         return []
     else:
         if IsMember(FirstElmt(H2),H1):
-            return Konso(FirstElmt(H2),MakeIntersect2(H1,Tail(H2)))
+            return Konso(FirstElmt(H2),MakeIntersectV2(H1,Tail(H2)))
         else:
-            return MakeIntersect2(H1,Tail(H2))
+            return MakeIntersectV2(H1,Tail(H2))
     
-def MakeUnion1(H1,H2):
+def MakeUnionV1(H1,H2):
     if IsEmpty(H1):
         return H2
     else:
         if not IsMember(FirstElmt(H1),H2):
-            return Konso(FirstElmt(H1),MakeUnion1(Tail(H1),H2))
+            return Konso(FirstElmt(H1),MakeUnionV1(Tail(H1),H2))
         else:
-            return MakeUnion1(Tail(H1),H2)
+            return MakeUnionV1(Tail(H1),H2)
     
-def MakeUnion2(H1,H2):
+def MakeUnionV2(H1,H2):
     if IsEmpty(H2):
         return H1
     else:
         if not IsMember(FirstElmt(H2),H1):
-            return Konso(FirstElmt(H2),MakeUnion2(H1,Tail(H2)))
+            return Konso(FirstElmt(H2),MakeUnionV2(H1,Tail(H2)))
         else:
-            return MakeUnion2(H1,Tail(H2))
+            return MakeUnionV2(H1,Tail(H2))
         
 def  NBIntersect(H1,H2):
     if IsEmpty(H1):
@@ -196,28 +196,28 @@ def NBUnion(H1,H2):
 
     
 # Aplikasi
-print(Rember1(4,[1,2,3,4,5,4,7]))
-print(Rember2(4,[1,2,3,4,5,4,7]))
+print(RemberV1(4,[1,2,3,4,5,4,7]))
+print(RemberV2(4,[1,2,3,4,5,4,7]))
 
 print(MultiRember(4,[1,2,3,4,5,4,7]))
 
-print(MakeSet1([1,1,2,4,5,3,6,7,3,3]))
-print(MakeSet2([1,1,2,4,5,3,6,7,3,3]))
+print(MakeSetV1([1,1,2,4,5,3,6,7,3,3]))
+print(MakeSetV2([1,1,2,4,5,3,6,7,3,3]))
 
 print(KonsoSet(3,[1,2,4,5]))
 print(KonsoSet(3,[1,2,3,4,5]))
 
 print(IsSet([1,2,3,4,5,6,3,32,32,4,5,2]))
 print(IsSubset([1,2,0],[1,2,3,4,5]))
-print(IsEqualSet1([1,2,3],[1,2,3,4]))
-print(IsEqualSet2([1,2,3],[1,2,3]))
+print(IsEqualSetV1([1,2,3],[1,2,3,4]))
+print(IsEqualSetV2([1,2,3],[1,2,3]))
 print(IsIntersect([1,2,3],[4,5,6,1,2]))
 
-print(MakeIntersect1([0,1,2,3,4,5],[4,5,6,1,2]))
-print(MakeIntersect2([0,1,2,3,4,5],[4,5,6,1,2]))
+print(MakeIntersectV1([0,1,2,3,4,5],[4,5,6,1,2]))
+print(MakeIntersectV2([0,1,2,3,4,5],[4,5,6,1,2]))
 
-print(MakeUnion1([0,1,2,3,4,5],[4,5,6,1,2]))
-print(MakeUnion2([0,1,2,3,4,5],[4,5,6,1,2]))
+print(MakeUnionV1([0,1,2,3,4,5],[4,5,6,1,2]))
+print(MakeUnionV2([0,1,2,3,4,5],[4,5,6,1,2]))
 
 print(NBIntersect([0,1,2,3,4,5],[4,5,6,1,2]))
 print(NBUnion([0,1,2,3,4,5],[4,5,6,1,2]))
